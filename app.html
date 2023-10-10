@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hierarchical Tree Demo</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="controls">
+            <label for="nodeType">Node Type:</label>
+            <select id="nodeType">
+                <option value="single">Single Node</option>
+                <option value="child">Child Node</option>
+                <option value="parent">Parent Node</option>
+            </select>
+            <label for="selectedNode">Selected Node:</label>
+            <input type="text" id="selectedNode" readonly>
+            <button id="updateButton">Update</button>
+            <button id="deleteButton">Delete</button>
+        </div>
+        <div id="tree-container">
+            <!-- Tree structure will be dynamically generated here -->
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nodeTypeSelect = document.getElementById('nodeType');
+            const selectedNodeInput = document.getElementById('selectedNode');
+            const updateButton = document.getElementById('updateButton');
+            const deleteButton = document.getElementById('deleteButton');
+            const treeContainer = document.getElementById('tree-container');
+
+            let selectedNode = null;
+
+            nodeTypeSelect.addEventListener('change', function() {
+                const nodeType = nodeTypeSelect.value;
+                selectedNode = createNode(nodeType);
+                selectedNodeInput.value = nodeType;
+            });
+
+            updateButton.addEventListener('click', function() {
+                if (selectedNode) {
+                    const updatedName = selectedNodeInput.value;
+                    selectedNode.textContent = updatedName;
+                }
+            });
+
+            deleteButton.addEventListener('click', function() {
+                if (selectedNode) {
+                    treeContainer.removeChild(selectedNode);
+                    selectedNode = null;
+                    selectedNodeInput.value = '';
+                }
+            });
+
+            function createNode(nodeType) {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.textContent = nodeType;
+                treeContainer.appendChild(node);
+                return node;
+            }
+        });
+    </script>
+</body>
+</html>
